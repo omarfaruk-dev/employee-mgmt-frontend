@@ -1,6 +1,7 @@
 'use client';
 
 import { Employee } from '@/types/employee';
+import toast from 'react-hot-toast';
 
 interface EmployeeTableProps {
   employees: Employee[];
@@ -107,22 +108,54 @@ export default function EmployeeTable({ employees, onEdit, onDelete, loading }: 
                 {formatDate(employee.hire_date)}
               </td> */}
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <button
-                  onClick={() => onEdit(employee)}
-                  className="text-blue-600 hover:text-blue-900 mr-4"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => {
-                    if (confirm(`Are you sure you want to delete ${employee.first_name} ${employee.last_name}?`)) {
-                      onDelete(employee.id);
-                    }
-                  }}
-                  className="text-red-600 hover:text-red-900"
-                >
-                  Delete
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => onEdit(employee)}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => {
+                      toast((t) => (
+                        <div className="flex flex-col gap-3">
+                          <p className="font-medium text-gray-900">
+                            Delete {employee.first_name} {employee.last_name}?
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            This action cannot be undone.
+                          </p>
+                          <div className="flex gap-2 justify-end">
+                            <button
+                              onClick={() => {
+                                toast.dismiss(t.id);
+                              }}
+                              className="px-3 py-1.5 text-sm bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md transition-colors"
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              onClick={() => {
+                                toast.dismiss(t.id);
+                                onDelete(employee.id);
+                                toast.success('Employee deleted successfully!');
+                              }}
+                              className="px-3 py-1.5 text-sm bg-red-500 hover:bg-red-600 text-white rounded-md transition-colors"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      ), {
+                        duration: Infinity,
+                        position: 'top-center',
+                      });
+                    }}
+                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
+                  >
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
