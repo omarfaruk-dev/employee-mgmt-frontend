@@ -10,13 +10,13 @@ interface EmployeeTableProps {
 }
 
 export default function EmployeeTable({ employees, onEdit, onDelete, loading }: EmployeeTableProps) {
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  };
+  // const formatDate = (dateString: string) => {
+  //   return new Date(dateString).toLocaleDateString('en-US', {
+  //     year: 'numeric',
+  //     month: 'short',
+  //     day: 'numeric',
+  //   });
+  // };
 
   const formatSalary = (salary: string | number) => {
     return new Intl.NumberFormat('en-US', {
@@ -67,9 +67,9 @@ export default function EmployeeTable({ employees, onEdit, onDelete, loading }: 
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Salary
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Hire Date
-            </th>
+            </th> */}
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Actions
             </th>
@@ -103,9 +103,9 @@ export default function EmployeeTable({ employees, onEdit, onDelete, loading }: 
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
                 {formatSalary(employee.salary)}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {formatDate(employee.hire_date)}
-              </td>
+              </td> */}
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <button
                   onClick={() => onEdit(employee)}
